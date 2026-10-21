@@ -34,3 +34,33 @@ function playRound(playerSelection, computerSelection) {
 }
 
 //Obadea
+//Play rounds until the player or the computer wins three rounds
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    const winningScore = 3;
+
+    while (playerScore < winningScore && computerScore < winningScore) {
+        const playerSelection = prompt("Enter Rock, Paper, or Scissors:");
+        const computerSelection = computerPlay();
+        const result = playRound(playerSelection, computerSelection);
+
+        if (result === "Player Wins!") {
+            playerScore++;
+            console.log(`Round result: ${result} Player ${playerScore} - Computer ${computerScore}`);
+        } else if (result === "Computer Wins!") {
+            computerScore++;
+            console.log(`Round result: ${result} Player ${playerScore} - Computer ${computerScore}`);
+        } else {
+            console.log(`Round result: ${result} Player ${playerScore} - Computer ${computerScore}`);
+        }
+    }
+
+    if (playerScore > computerScore) {
+        console.log(`Player wins the game! Final score: Player ${playerScore} - Computer ${computerScore}`);
+    } else {
+        console.log(`Computer wins the game! Final score: Player ${playerScore} - Computer ${computerScore}`);
+    }
+}
+
+game();
