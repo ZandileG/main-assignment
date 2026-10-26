@@ -26,6 +26,7 @@ function getPlayerSelection() {
     if (selection === null) {
         return null;
     }
+
     return selection.trim().toLowerCase();
 }
 
@@ -41,6 +42,7 @@ function playRound(player, computer) {
     ) {
         return "player";
     }
+
     return "computer";
 }
 
@@ -57,6 +59,7 @@ function displayRoundResult(result, player, computer, scores) {
         console.log("Round result: Computer wins this round.");
         scores.computer++;
     }
+
     console.log(
         `Score: Player ${scores.player} - Computer ${scores.computer}`
     );
@@ -68,6 +71,7 @@ function displayGameResult(scores) {
     } else {
         console.log("Computer wins the game!");
     }
+
     console.log(
         `Final score: Player ${scores.player} - Computer ${scores.computer}`
     );
@@ -81,10 +85,7 @@ function game() {
 
     const winningScore = 3;
 
-    while (
-        scores.player < winningScore &&
-        scores.computer < winningScore
-    ) {
+    while (scores.player < winningScore && scores.computer < winningScore) {
         const player = getPlayerSelection();
 
         if (player === null) {
@@ -93,9 +94,7 @@ function game() {
         }
 
         if (!["rock", "paper", "scissors"].includes(player)) {
-            console.log(
-                "Invalid choice! Please enter rock, paper, or scissors."
-            );
+            console.log("Invalid choice! Please enter rock, paper, or scissors.");
             continue;
         }
 
@@ -104,6 +103,7 @@ function game() {
 
         displayRoundResult(result, player, computer, scores);
     }
+
     displayGameResult(scores);
 }
 
