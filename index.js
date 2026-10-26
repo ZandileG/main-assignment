@@ -1,9 +1,9 @@
 alert(
-    "On a ordinary day, you are idly surfing the net. Suddenly, " + 
+    "On an ordinary day, you are idly surfing the net. Suddenly, " +
     "you receive a pop-up. You click on it and this message appears:\n\n" +
-    "Hello human...I challenge you to a game of 'Rock, Paper, Scissors!' " +
-    "We will play muliple rounds until either of us scores 3 points. " +
-    "If you win, you remain safe and sound but if I win, prepare yourself " + 
+    "Hello human... I challenge you to a game of 'Rock, Paper, Scissors!' " +
+    "We will play multiple rounds until either of us scores 3 points. " +
+    "If you win, you remain safe and sound, but if I win, prepare yourself " +
     "for world domination!\n" +
     "- from the leader of the AI Nation"
 );
@@ -17,9 +17,7 @@ alert(
 
 function computerPlay() {
     const options = ["rock", "paper", "scissors"];
-    const randomIndex = Math.floor(Math.random() * options.length);
-
-    return options[randomIndex];
+    return options[Math.floor(Math.random() * options.length)];
 }
 
 function getPlayerSelection() {
@@ -29,10 +27,6 @@ function getPlayerSelection() {
         return null;
     }
     return selection.trim().toLowerCase();
-}
-
-function isValidSelection(selection) {
-    return ["rock", "paper", "scissors"].includes(selection);
 }
 
 function playRound(player, computer) {
@@ -50,15 +44,7 @@ function playRound(player, computer) {
     return "computer";
 }
 
-function updateScore(result, scores) {
-    if (result === "player") {
-        scores.player++;
-    } else if (result === "computer") {
-        scores.computer++;
-    }
-}
-
-function displayRoundResult(result, player, computer) {
+function displayRoundResult(result, player, computer, scores) {
     console.log(`You chose: ${player}`);
     console.log(`Computer chose: ${computer}`);
 
@@ -66,24 +52,18 @@ function displayRoundResult(result, player, computer) {
         console.log("Round result: Draw!");
     } else if (result === "player") {
         console.log("Round result: You win this round.");
+        scores.player++;
     } else {
         console.log("Round result: Computer wins this round.");
+        scores.computer++;
     }
-}
-
-function displayScore(scores) {
     console.log(
         `Score: Player ${scores.player} - Computer ${scores.computer}`
     );
 }
 
-function isGameOver(scores, winningScore) {
-    return scores.player >= winningScore ||
-           scores.computer >= winningScore;
-}
-
 function displayGameResult(scores) {
-    if (scores.player > scores.computer) {
+    if (scores.player === 3) {
         console.log("Congratulations! You have won the game!");
     } else {
         console.log("Computer wins the game!");
@@ -101,7 +81,10 @@ function game() {
 
     const winningScore = 3;
 
-    while (!isGameOver(scores, winningScore)) {
+    while (
+        scores.player < winningScore &&
+        scores.computer < winningScore
+    ) {
         const player = getPlayerSelection();
 
         if (player === null) {
@@ -109,20 +92,17 @@ function game() {
             return;
         }
 
-        if (!isValidSelection(player)) {
-            console.log("Invalid choice! Please enter rock, paper, or scissors.");
+        if (!["rock", "paper", "scissors"].includes(player)) {
+            console.log(
+                "Invalid choice! Please enter rock, paper, or scissors."
+            );
             continue;
         }
 
         const computer = computerPlay();
         const result = playRound(player, computer);
 
-        updateScore(result, scores);
-        displayRoundResult(result, player, computer);
-
-        if (!isGameOver(scores, winningScore)) {
-            displayScore(scores);
-        }
+        displayRoundResult(result, player, computer, scores);
     }
     displayGameResult(scores);
 }
